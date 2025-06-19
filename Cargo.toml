@@ -6,8 +6,13 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 derive_more = { version = "1.0", features = ["display", "error"] }
-sqlx = { version = "0.8", features = [ "sqlite", "runtime-tokio", "tls-native-tls" ]  }
 serde = { version = "1.0", features = ["derive"] } 
 serde_json = "1.0" 
 uuid = { version = "1.2", features = ["v4"] }
 dotenv = "0.15"
+sqlx = { version = "0.8", features = [ "postgres", "runtime-tokio", "tls-native-tls","chrono" ]  }
+base64="0.22.1"
+actix-cors = "0.7.0"
+env_logger="0.11.5"
+rand="0.9.1"
+
