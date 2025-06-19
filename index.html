@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li{
+        list-style: none;
+        
+        }
+        a{
+            text-decoration: underline;
+        }
+        @media(max-width:760px) {
+            input{
+                width: 100%;
+                height: 1.8em;
+            }
+            *{
+                color: rgb(28, 34, 82);
+            }
+            h1{
+                color: rgb(8, 4, 240);
+                text-align: center;
+                width: 100%;
+                justify-content: center;
+            }
+            .container{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            
+            }
+            
+            .list-container{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+        @media(max-width:1640px) {
+            input{
+                width: 60%;
+                height: 1.8em;
+            }
+            *{
+                color: rgb(28, 34, 82);
+            }
+            h1{
+                color: rgb(8, 4, 240);
+                text-align: center;
+                width: 100%;
+                justify-content: center;
+            }
+            .container{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            
+            }
+            .list-container{
+                display: flex;
+                flex-direction: column;
+              /*  // justify-items: start; */
+            }
+            li{
+                text-align:start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>cURL SHORTENER</h1>
+    </header>
+    <main>
+        <div class="container"> 
+            <input type="text" placeholder="www.example.com" class="input">
+            <button class="btn">shorten</button>
+        </div>
+        <ul class="list-container">
+            
+        </ul>
+    </main>
+</body>
+<script>
+    let list = document.querySelector(".list-container");
+    let btn = document.body.querySelector(".btn");
+    btn.addEventListener("click", async function () {
+    let inputValue = document.querySelector(".input").value;
+    try {
+        let url = {
+            original: inputValue
+        };
+        console.log(inputValue);
+        console.log(url);
+        const response = await fetch("http://127.0.0.1:8080/shorten", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(url)
+        });
+        if (response.ok) {
+            const data = await response.json();
+            let li = document.createElement("li");
+            let a = document.createElement("a");
+            
+            a.href = `http://127.0.0.1:8080/${data.shortened}`;
+            a.textContent=a.href;
+            li.innerHTML="link :"
+            li.appendChild(a);
+            list.appendChild(li);
+        } else {
+            const error = await response.text();
+            console.log(error);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+   
+});
+
+</script>
+</html>
